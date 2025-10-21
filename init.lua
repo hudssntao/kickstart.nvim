@@ -970,6 +970,13 @@ require('lazy').setup({
       vim.o.foldenable = true
       require('ufo').setup {
         close_fold_kinds = { 'imports' },
+        provider_selector = function(bufnr, filetype, buftype)
+          if filetype == 'dbui' or filetype == 'dbout' then
+            return '' -- Disable UFO providers
+          end
+          -- Default providers for other filetypes (e.g., 'treesitter', 'indent')
+          return { 'treesitter', 'indent' }
+        end,
       }
     end,
   },
